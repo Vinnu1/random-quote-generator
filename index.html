@@ -24,18 +24,43 @@
         
       </div>
       <button id="btn" class="btn btn-success float-left">Generate</button>
-      <a id="tweet" class="btn btn-primary float-right"
+      <div class="float-right d-inline">
+        <a id="fbutton" class="btn btn-primary text-light">
+  FB Status</a>
+        <a id="tweet" class="btn btn-info"
   href="https://twitter.com/intent/tweet?text=" target="_blank">
 Tweet</a>
+</div>
     </div>
   </div>
 </div>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script  src="js/index.js"></script>
 
-  
-
-    <script  src="js/index.js"></script>
-
+  <script>
+      var fbutton = document.getElementById('fbutton');
+    window.fbAsyncInit = function() {
+  FB.init({
+    appId            : 'your_app_id',
+    autoLogAppEvents : true,
+    xfbml            : true,
+    version          : 'v2.12'
+  });
+};
+(function(d, s, id){
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "https://connect.facebook.net/en_US/sdk.js";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
+fbutton.addEventListener("click",function(){    
+  var text=document.getElementById("quote").innerText;
+FB.login(function(){
+FB.api('/me/feed', 'post', {message: text});
+}, {scope: 'publish_actions'});
+});
+  </script>
 
 
 
